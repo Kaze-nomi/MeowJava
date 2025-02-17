@@ -336,3 +336,163 @@ spring:
 ▎Уникальный факт:
 
 JaCoCo и Checkstyle можно интегрировать с CI/CD системами (например, GitHub Actions), чтобы автоматически проверять качество и покрытие кода при каждом коммите.
+
+# Семинар 5:
+
+▎1. Singleton (Одиночка)
+
+Определение: Порождающий паттерн, который гарантирует, что у класса есть только один экземпляр, и предоставляет глобальную точку доступа к нему.  
+Пример из жизни: В приложении может быть только один объект логгера, чтобы все модули писали логи в одно место.  
+Реализация в Java:
+```java
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+---
+
+▎2. Factory (Фабрика)
+
+Определение: Порождающий паттерн, который создает объекты без указания конкретных классов.  
+Пример из жизни: Вы заказываете еду в ресторане, а кухня решает, как приготовить блюдо.  
+Реализация в Java:
+```java
+public class ShapeFactory {
+    public Shape getShape(String shapeType) {
+        if (shapeType.equalsIgnoreCase("CIRCLE")) {
+            return new Circle();
+        } else if (shapeType.equalsIgnoreCase("RECTANGLE")) {
+            return new Rectangle();
+        }
+        return null;
+    }
+}
+```
+
+---
+
+▎3. Factory Method (Фабричный метод)
+
+Определение: Порождающий паттерн, который определяет интерфейс для создания объектов, но позволяет подклассам изменять тип создаваемых объектов.  
+Пример из жизни: В кофейне разные бариста (подклассы) могут готовить разные виды кофе.  
+Реализация в Java:
+```java
+abstract class ShapeCreator {
+    public abstract Shape createShape();
+}
+
+class CircleCreator extends ShapeCreator {
+    public Shape createShape() {
+        return new Circle();
+    }
+}
+
+class RectangleCreator extends ShapeCreator {
+    public Shape createShape() {
+        return new Rectangle();
+    }
+}
+```
+
+---
+
+▎4. Abstract Factory (Абстрактная фабрика)
+
+Определение: Порождающий паттерн, который предоставляет интерфейс для создания семейств связанных объектов без указания их конкретных классов.  
+Пример из жизни: Фабрика мебели может производить семейства объектов, например, "Викторианская мебель" или "Современная мебель".  
+Реализация в Java:
+```java
+interface FurnitureFactory {
+    Chair createChair();
+    Table createTable();
+}
+
+class VictorianFurnitureFactory implements FurnitureFactory {
+    public Chair createChair() { return new VictorianChair(); }
+    public Table createTable() { return new VictorianTable(); }
+}
+```
+
+
+---
+
+▎5. Builder (Строитель)
+
+Определение: Порождающий паттерн, который позволяет пошагово создавать сложные объекты.  
+Пример из жизни: Строительство дома: сначала строится фундамент, затем стены, крыша и т.д.  
+Реализация в Java:
+
+```java
+public class House {
+    private String foundation;
+    private String walls;
+    private String roof;
+
+    public static class Builder {
+        private String foundation;
+        private String walls;
+        private String roof;
+
+        public Builder setFoundation(String foundation) {
+            this.foundation = foundation;
+            return this;
+        }
+
+        public Builder setWalls(String walls) {
+            this.walls = walls;
+            return this;
+        }
+
+        public Builder setRoof(String roof) {
+            this.roof = roof;
+            return this;
+        }
+
+        public House build() {
+            House house = new House();
+            house.foundation = this.foundation;
+            house.walls = this.walls;
+            house.roof = this.roof;
+            return house;
+        }
+    }
+}
+```
+
+---
+
+▎6. Prototype (Прототип)
+
+Определение: Порождающий паттерн, который позволяет копировать объекты без зависимости от их конкретных классов.  
+Пример из жизни: Клонирование документов в офисе.  
+Реализация в Java:
+```java
+public class Prototype implements Cloneable {
+    private String field;
+
+    public Prototype(String field) {
+        this.field = field;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+```
+
+---
+
+▎Уникальный факт:
+
+Паттерн Singleton часто становится антипаттерном, если используется неправильно, так как нарушает принцип единственной ответственности (SRP) и может усложнять тестирование кода.
