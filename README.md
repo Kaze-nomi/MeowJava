@@ -140,10 +140,10 @@ Java поддерживает только одиночное наследова
 ▎Service Locator
 
 Шаблон проектирования, предоставляющий центральный объект для поиска нужных сервисов. Например, в приложении можно использовать ServiceLocator для поиска базы данных или логгера без прямой зависимости от их реализации.  
-
+```java
 Logger logger = ServiceLocator.getService(Logger.class);
 logger.log("Пример использования ServiceLocator");
-
+```
 
 ---
 
@@ -151,10 +151,11 @@ logger.log("Пример использования ServiceLocator");
 
 Принцип SOLID, согласно которому модули верхнего уровня не должны зависеть от модулей нижнего уровня, а оба должны зависеть от абстракций. Например, вместо зависимости от конкретного класса репозитория, код использует интерфейс.  
 
+```java
 interface Repository {
     void save(String data);
 }
-
+```
 
 ---
 
@@ -162,9 +163,10 @@ interface Repository {
 
 Принцип, при котором управление зависимостями передается внешнему контейнеру, а не реализуется вручную в коде. В Spring IoC контейнер автоматически внедряет зависимости через аннотации.  
 
+```java
 @Autowired
 private Service service;
-
+```
 
 ---
 
@@ -172,6 +174,7 @@ private Service service;
 
 Шаблон проектирования, который гарантирует, что класс имеет только один экземпляр и предоставляет глобальную точку доступа к нему. Например, класс для логирования в приложении может быть реализован как Singleton.  
 
+```java
 public class Logger {
     private static Logger instance = new Logger();
     private Logger() {}
@@ -179,7 +182,7 @@ public class Logger {
         return instance;
     }
 }
-
+```
 
 ---
 
@@ -187,9 +190,10 @@ public class Logger {
 
 Шаблон проектирования, позволяющий создавать новые объекты путем клонирования существующих. Например, если у вас есть объект с большим количеством настроек, вы можете клонировать его вместо создания заново.  
 
+```java
 Car prototypeCar = new Car("Red", "Sedan");
 Car clonedCar = prototypeCar.clone();
-
+```
 
 ---
 
@@ -197,11 +201,12 @@ Car clonedCar = prototypeCar.clone();
 
 Тесты, проверяющие работу отдельных модулей или методов приложения. Например, с помощью JUnit можно протестировать метод сложения чисел.  
 
+```java
 @Test
 public void testAddition() {
     assertEquals(5, Calculator.add(2, 3));
 }
-
+```
 
 ---
 
@@ -209,9 +214,10 @@ public void testAddition() {
 
 Mockito позволяет создавать mock-объекты (имитации) для тестирования зависимостей. Spy используется для частичного контроля над реальными объектами.  
 
+```java
 MyService mockService = Mockito.mock(MyService.class);
 Mockito.when(mockService.getData()).thenReturn("Mocked Data");
-
+```
 
 ---
 
@@ -219,12 +225,13 @@ Mockito.when(mockService.getData()).thenReturn("Mocked Data");
 
 Аннотация Spring Boot для интеграционного тестирования всего приложения. Она поднимает контекст Spring и позволяет тестировать все уровни приложения.  
 
+```java
 @SpringBootTest
 public class ApplicationTests {
     @Test
     void contextLoads() {}
 }
-
+```
 
 ---
 
@@ -232,9 +239,10 @@ public class ApplicationTests {
 
 Аннотация для автоматического внедрения зависимостей в классы Spring. Например, вы можете внедрить сервис в контроллер без явного создания объекта.  
 
+```java
 @Autowired
 private MyService myService;
-
+```
 
 ---
 
@@ -242,13 +250,14 @@ private MyService myService;
 
 Аннотация для обозначения класса как компонента Spring, чтобы его можно было автоматически обнаружить и зарегистрировать в контексте. Например, если класс помечен как @Component, его экземпляр будет создан автоматически.  
 
+```java
 @Component
 public class MyComponent {
     public void doWork() {
         System.out.println("Работа выполнена");
     }
 }
-
+```
 
 ---
 
@@ -267,11 +276,12 @@ Mockito был создан для упрощения тестирования �
 Вы заказываете пиццу в ресторане, и вам приносят готовое блюдо — это бин, созданный по рецепту.  
 
 Пример кода:
+```java
 @Bean
 public Pizza pizza() {
     return new Pizza("Pepperoni");
 }
-
+```
 
 ---
 
@@ -284,6 +294,7 @@ public Pizza pizza() {
 Книга рецептов, где каждый рецепт описывает, как приготовить блюдо (бин).  
 
 Пример кода:
+```java
 @Configuration
 public class AppConfig {
     @Bean
@@ -291,7 +302,7 @@ public class AppConfig {
         return new Pizza("Margherita");
     }
 }
-
+```
 
 ---
 
@@ -321,6 +332,7 @@ Checkstyle — это инструмент для проверки стиля и
 application.yml — это файл конфигурации Spring Boot, в котором задаются параметры приложения (например, порт сервера или настройки базы данных).  
 
 Пример:
+```yml
 server:
   port: 8080
 
@@ -329,7 +341,7 @@ spring:
     url: jdbc:mysql://localhost:3306/mydb
     username: user
     password: pass
-
+```
 
 ---
 
