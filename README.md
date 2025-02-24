@@ -508,3 +508,113 @@ public class Prototype implements Cloneable {
 ▎Уникальный факт:
 
 Паттерн Singleton часто становится антипаттерном, если используется неправильно, так как нарушает принцип единственной ответственности (SRP) и может усложнять тестирование кода.
+
+# Семинар 6:
+
+▎Поведенческие паттерны
+
+1. Цепочка обязанностей (Chain of Responsibility)  
+   Паттерн, который позволяет передавать запрос последовательно по цепочке обработчиков, пока один из них не обработает его.  
+   *Пример*: В системе технической поддержки запросы пользователя передаются от оператора к специалисту, пока не найдётся тот, кто может решить проблему.  
+
+   ```java
+   abstract class Handler {
+       protected Handler next;
+       public void setNext(Handler next) { this.next = next; }
+       public abstract void handleRequest(String request);
+   }
+   ```
+   
+1. Команда (Command)  
+   Паттерн, который инкапсулирует запрос в виде объекта, позволяя параметризовать объекты действиями.  
+   *Пример*: Удалённое управление телевизором с кнопками "включить", "выключить".  
+
+   ```java
+   interface Command { void execute(); }
+   class TurnOnCommand implements Command { public void execute() { System.out.println("TV is ON"); } }
+   ```
+
+2. Интерпретатор (Interpreter)  
+   Паттерн, который определяет грамматику языка и интерпретирует выражения этого языка.  
+   *Пример*: Калькулятор, который интерпретирует математические выражения.  
+
+   ```java
+   interface Expression { int interpret(); }
+   class Number implements Expression { int value; public Number(int value) { this.value = value; } public int interpret() { return value; } }
+   ```
+
+3. Итератор (Iterator)  
+   Паттерн, который предоставляет способ последовательного доступа к элементам коллекции без раскрытия её внутренней структуры.  
+   *Пример*: Перебор списка пользователей в приложении.  
+
+   ```
+   List<String> list = Arrays.asList("Alice", "Bob", "Charlie");
+   Iterator<String> iterator = list.iterator();
+   while(iterator.hasNext()) { System.out.println(iterator.next()); }
+   ```
+
+4. Посредник (Mediator)  
+   Паттерн, который обеспечивает взаимодействие между объектами через центральный объект-посредник.  
+   *Пример*: Чат-комната, где сообщения передаются через сервер.  
+
+   ```java
+   interface Mediator { void sendMessage(String message, User user); }
+   ```
+
+6. Хранитель (Memento)  
+   Паттерн, который позволяет сохранять и восстанавливать состояние объекта без нарушения его инкапсуляции.  
+   *Пример*: Функция отмены действий в текстовом редакторе.  
+
+   ```java
+   class Memento { private String state; public Memento(String state) { this.state = state; } public String getState() { return state; } }
+   ```
+
+8. Наблюдатель (Observer)  
+   Паттерн, который создаёт механизм подписки для получения уведомлений об изменении состояния объекта.  
+   *Пример*: Уведомления о новых сообщениях в социальных сетях.
+
+   ```java
+   interface Observer { void update(String message); }
+   class User implements Observer { public void update(String message) { System.out.println("New notification: " + message); } }
+   ```
+
+8. Состояние (State)  
+   Паттерн, который позволяет объекту изменять своё поведение в зависимости от своего состояния.  
+   *Пример*: Состояние "игра" или "пауза" в приложении для игр.  
+
+   ```java
+   interface State { void handle(); }
+   class PlayState implements State { public void handle() { System.out.println("Playing..."); } }
+   ```
+
+9. Стратегия (Strategy)  
+   Паттерн, который определяет семейство алгоритмов и делает их взаимозаменяемыми.  
+   *Пример*: Выбор метода сортировки в зависимости от размера массива.  
+
+   ```java
+   interface Strategy { void execute(); }
+   class QuickSort implements Strategy { public void execute() { System.out.println("QuickSort applied"); } }
+   ```
+
+10. Шаблонный метод (Template Method)  
+    Паттерн, который задаёт общий алгоритм выполнения задачи с возможностью переопределения отдельных шагов в подклассах.  
+    *Пример*: Алгоритм приготовления кофе или чая (заварить воду, добавить ингредиенты).  
+
+    ```java
+    abstract class Beverage { final void prepare() { boilWater(); addIngredients(); } abstract void addIngredients(); void boilWater() { System.out.println("Boiling water"); } }
+    ```
+
+11. Посетитель (Visitor)
+    Паттерн, который позволяет добавлять новые операции к существующим объектам без изменения их структуры.  
+    *Пример*: Подсчёт стоимости товаров в корзине интернет-магазина.  
+
+    ```java
+    interface Visitor { void visit(Book book); void visit(Fruit fruit); }
+    ```
+
+---
+
+▎Уникальный факт:
+
+Паттерны проектирования были впервые систематизированы в книге "Design Patterns: Elements of Reusable Object-Oriented Software" (1994), написанной "Бандой четырёх". Эти принципы до сих пор остаются основой для разработки программного обеспечения и изучаются на всех уровнях обучения программированию.
+    
