@@ -618,3 +618,200 @@ public class Prototype implements Cloneable {
 
 Паттерны проектирования были впервые систематизированы в книге "Design Patterns: Elements of Reusable Object-Oriented Software" (1994), написанной "Бандой четырёх". Эти принципы до сих пор остаются основой для разработки программного обеспечения и изучаются на всех уровнях обучения программированию.
     
+# Семинар 7:
+
+▎1. Декоратор (Decorator)
+
+Определение: Паттерн, позволяющий динамически добавлять объектам новую функциональность, не изменяя их код.  
+Пример из жизни: Обёртывание подарка в несколько слоёв упаковки (каждый слой добавляет что-то новое).  
+Пример кода:
+
+```java
+interface Coffee {
+    String getDescription();
+    double getCost();
+}
+
+class SimpleCoffee implements Coffee {
+    public String getDescription() { return "Simple coffee"; }
+    public double getCost() { return 5; }
+}
+
+class MilkDecorator implements Coffee {
+    private Coffee coffee;
+    public MilkDecorator(Coffee coffee) { this.coffee = coffee; }
+    public String getDescription() { return coffee.getDescription() + ", milk"; }
+    public double getCost() { return coffee.getCost() + 2; }
+}
+```
+
+---
+
+▎2. Адаптер (Adapter)
+
+Определение: Паттерн, который позволяет объекту с одним интерфейсом работать с другим несовместимым интерфейсом.  
+Пример из жизни: Зарядное устройство для телефона, которое преобразует высокое напряжение в подходящее.  
+Пример кода:
+
+```java
+interface USB {
+    void connectWithUsbCable();
+}
+
+class TypeCPhone {
+    void connectWithTypeC() { System.out.println("Connected with Type-C"); }
+}
+
+class UsbToTypeCAdapter implements USB {
+    private TypeCPhone phone;
+    UsbToTypeCAdapter(TypeCPhone phone) { this.phone = phone; }
+    public void connectWithUsbCable() { phone.connectWithTypeC(); }
+}
+```
+
+---
+
+▎3. Фасад (Facade)
+
+Определение: Паттерн, предоставляющий простой интерфейс для работы с сложной системой.  
+Пример из жизни: Универсальный пульт управления телевизором, звуком и кондиционером.  
+Пример кода:
+
+```java
+class HomeTheaterFacade {
+    private TV tv;
+    private SoundSystem soundSystem;
+
+    public HomeTheaterFacade(TV tv, SoundSystem soundSystem) {
+        this.tv = tv;
+        this.soundSystem = soundSystem;
+    }
+
+    public void watchMovie() {
+        tv.turnOn();
+        soundSystem.setVolume(10);
+        System.out.println("Enjoy your movie!");
+    }
+}
+```
+
+---
+
+▎4. Заместитель (Прокси) (Proxy)
+
+Определение: Паттерн, который предоставляет объект-заместитель для контроля доступа к другому объекту.  
+Пример из жизни: Секретарь, который фильтрует входящие звонки для директора.  
+Пример кода:
+
+```java
+interface Image {
+    void display();
+}
+
+class RealImage implements Image {
+    private String filename;
+    public RealImage(String filename) { this.filename = filename; loadFromDisk(); }
+    private void loadFromDisk() { System.out.println("Loading " + filename); }
+    public void display() { System.out.println("Displaying " + filename); }
+}
+
+class ProxyImage implements Image {
+    private RealImage realImage;
+    private String filename;
+
+    public ProxyImage(String filename) { this.filename = filename; }
+    public void display() {
+        if (realImage == null) realImage = new RealImage(filename);
+        realImage.display();
+    }
+}
+```
+
+---
+
+▎5. Компоновщик (Composite)
+
+Определение: Паттерн, позволяющий объединять объекты в древовидную структуру для удобной работы с ними как с единым целым.  
+Пример из жизни: Папка на компьютере, которая может содержать как файлы, так и другие папки.  
+Пример кода:
+
+```java
+interface FileSystemComponent {
+    void showDetails();
+}
+
+class File implements FileSystemComponent {
+    private String name;
+    public File(String name) { this.name = name; }
+    public void showDetails() { System.out.println("File: " + name); }
+}
+
+class Folder implements FileSystemComponent {
+    private List<FileSystemComponent> components = new ArrayList<>();
+    public void add(FileSystemComponent component) { components.add(component); }
+    public void showDetails() { components.forEach(FileSystemComponent::showDetails); }
+}
+```
+
+---
+
+▎6. Мост (Bridge)
+
+Определение: Паттерн, разделяющий абстракцию и реализацию, позволяя изменять их независимо друг от друга.  
+Пример из жизни: Разделение пульта управления и конкретного устройства (телевизора или кондиционера).  
+Пример кода:
+
+```java
+interface Device {
+    void turnOn();
+}
+
+class TV implements Device {
+    public void turnOn() { System.out.println("TV is ON"); }
+}
+
+class RemoteControl {
+    protected Device device;
+    public RemoteControl(Device device) { this.device = device; }
+    public void pressPowerButton() { device.turnOn(); }
+}
+```
+
+---
+
+▎7. Приспособленец (Flyweight)
+
+Определение: Паттерн, позволяющий экономить память за счёт разделения общего состояния между множеством объектов.  
+Пример из жизни: Использование одного экземпляра шрифта для всех символов текста в документе.  
+Пример кода:
+
+```java
+class TreeType {
+    private String name;
+    private String color;
+
+    public TreeType(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
+    public void draw(int x, int y) {
+        System.out.println("Drawing " + name + " at (" + x + ", " + y + ")");
+    }
+}
+
+class TreeFactory {
+    private static Map<String, TreeType> treeTypes = new HashMap<>();
+
+    public static TreeType getTreeType(String name, String color) {
+        treeTypes.putIfAbsent(name, new TreeType(name, color));
+        return treeTypes.get(name);
+    }
+}
+```
+
+---
+
+▎Уникальный факт:
+
+Паттерн Фасад часто используется при проектировании библиотек и API, чтобы скрыть сложность внутренней реализации и предоставить разработчикам простой и интуитивно понятный интерфейс. Например, в Java javax.faces.context.FacesContext является примером фасада в Java EE.
