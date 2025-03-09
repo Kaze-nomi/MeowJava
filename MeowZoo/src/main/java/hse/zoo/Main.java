@@ -4,18 +4,16 @@ import hse.zoo.animals.*;
 import hse.zoo.things.*;
 import hse.zoo.zoo.Zoo;
 
-import hse.config.ZooApplicationConfig;
-
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-
-        ApplicationContext context = new AnnotationConfigApplicationContext(ZooApplicationConfig.class);
-        
+        var context = SpringApplication.run(Main.class, args);
         Zoo zoo = context.getBean(Zoo.class);
 
         Animal monkey = new Monkey(5, 1, true, 7);
