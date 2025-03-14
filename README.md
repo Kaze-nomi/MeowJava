@@ -511,9 +511,7 @@ public class Prototype implements Cloneable {
 
 # Семинар 6:
 
-▎Поведенческие паттерны
-
-1. Цепочка обязанностей (Chain of Responsibility)  
+▎Цепочка обязанностей (Chain of Responsibility)  
    Паттерн, который позволяет передавать запрос последовательно по цепочке обработчиков, пока один из них не обработает его.  
    *Пример*: В системе технической поддержки запросы пользователя передаются от оператора к специалисту, пока не найдётся тот, кто может решить проблему.  
 
@@ -525,7 +523,7 @@ public class Prototype implements Cloneable {
    }
    ```
    
-2. Команда (Command)  
+▎Команда (Command)  
    Паттерн, который инкапсулирует запрос в виде объекта, позволяя параметризовать объекты действиями.  
    *Пример*: Удалённое управление телевизором с кнопками "включить", "выключить".  
 
@@ -534,7 +532,7 @@ public class Prototype implements Cloneable {
    class TurnOnCommand implements Command { public void execute() { System.out.println("TV is ON"); } }
    ```
 
-3. Интерпретатор (Interpreter)  
+▎Интерпретатор (Interpreter)  
    Паттерн, который определяет грамматику языка и интерпретирует выражения этого языка.  
    *Пример*: Калькулятор, который интерпретирует математические выражения.  
 
@@ -543,7 +541,7 @@ public class Prototype implements Cloneable {
    class Number implements Expression { int value; public Number(int value) { this.value = value; } public int interpret() { return value; } }
    ```
 
-4. Итератор (Iterator)  
+▎Итератор (Iterator)  
    Паттерн, который предоставляет способ последовательного доступа к элементам коллекции без раскрытия её внутренней структуры.  
    *Пример*: Перебор списка пользователей в приложении.  
 
@@ -553,7 +551,7 @@ public class Prototype implements Cloneable {
    while(iterator.hasNext()) { System.out.println(iterator.next()); }
    ```
 
-5. Посредник (Mediator)  
+▎Посредник (Mediator)  
    Паттерн, который обеспечивает взаимодействие между объектами через центральный объект-посредник.  
    *Пример*: Чат-комната, где сообщения передаются через сервер.  
 
@@ -561,7 +559,7 @@ public class Prototype implements Cloneable {
    interface Mediator { void sendMessage(String message, User user); }
    ```
 
-6. Хранитель (Memento)  
+▎Хранитель (Memento)  
    Паттерн, который позволяет сохранять и восстанавливать состояние объекта без нарушения его инкапсуляции.  
    *Пример*: Функция отмены действий в текстовом редакторе.  
 
@@ -569,7 +567,7 @@ public class Prototype implements Cloneable {
    class Memento { private String state; public Memento(String state) { this.state = state; } public String getState() { return state; } }
    ```
 
-7. Наблюдатель (Observer)  
+▎Наблюдатель (Observer)  
    Паттерн, который создаёт механизм подписки для получения уведомлений об изменении состояния объекта.  
    *Пример*: Уведомления о новых сообщениях в социальных сетях.
 
@@ -578,7 +576,7 @@ public class Prototype implements Cloneable {
    class User implements Observer { public void update(String message) { System.out.println("New notification: " + message); } }
    ```
 
-8. Состояние (State)  
+▎Состояние (State)  
    Паттерн, который позволяет объекту изменять своё поведение в зависимости от своего состояния.  
    *Пример*: Состояние "игра" или "пауза" в приложении для игр.  
 
@@ -587,7 +585,7 @@ public class Prototype implements Cloneable {
    class PlayState implements State { public void handle() { System.out.println("Playing..."); } }
    ```
 
-9. Стратегия (Strategy)  
+▎Стратегия (Strategy)  
    Паттерн, который определяет семейство алгоритмов и делает их взаимозаменяемыми.  
    *Пример*: Выбор метода сортировки в зависимости от размера массива.  
 
@@ -596,7 +594,7 @@ public class Prototype implements Cloneable {
    class QuickSort implements Strategy { public void execute() { System.out.println("QuickSort applied"); } }
    ```
 
-10. Шаблонный метод (Template Method)  
+▎Шаблонный метод (Template Method)  
     Паттерн, который задаёт общий алгоритм выполнения задачи с возможностью переопределения отдельных шагов в подклассах.  
     *Пример*: Алгоритм приготовления кофе или чая (заварить воду, добавить ингредиенты).  
 
@@ -604,7 +602,7 @@ public class Prototype implements Cloneable {
     abstract class Beverage { final void prepare() { boilWater(); addIngredients(); } abstract void addIngredients(); void boilWater() { System.out.println("Boiling water"); } }
     ```
 
-11. Посетитель (Visitor)
+▎Посетитель (Visitor)
     Паттерн, который позволяет добавлять новые операции к существующим объектам без изменения их структуры.  
     *Пример*: Подсчёт стоимости товаров в корзине интернет-магазина.  
 
@@ -832,7 +830,7 @@ class TreeFactory {
 
 ▎Markdown  
    Это легковесный текстовый формат для разметки документов, который преобразуется в HTML или другие форматы. Используется для написания документации, заметок или README-файлов.  
-   *Пример: # Заголовок преобразуется в HTML как <h1>Заголовок</h1>.*
+   *Пример: *\slash Заголовок преобразуется в HTML как <h1>Заголовок</h1>.*
 
 ▎XML (Extensible Markup Language)  
    Это язык разметки для хранения и обмена данными, который позволяет задавать структуру с помощью тегов. XML часто используется в конфигурационных файлах или для передачи данных между системами.  
@@ -858,40 +856,40 @@ class TreeFactory {
 
 ▎@RequestMapping vs @GetMapping vs @PostMapping vs @PutMapping vs @DeleteMapping:  
 
-   • @RequestMapping задаёт общий путь для всех HTTP-методов.  
+   - @RequestMapping задаёт общий путь для всех HTTP-методов.  
 
-   • Остальные аннотации уточняют конкретный HTTP-метод:  
+   - Остальные аннотации уточняют конкретный HTTP-метод:  
 
-     • @GetMapping — для получения данных.  
+     - @GetMapping — для получения данных.  
 
-     • @PostMapping — для создания ресурсов.  
+     - @PostMapping — для создания ресурсов.  
 
-     • @PutMapping — для обновления.  
+     - @PutMapping — для обновления.  
 
-     • @DeleteMapping — для удаления.  
+     - @DeleteMapping — для удаления.
    Пример: @GetMapping("/users") возвращает список пользователей.
 
 ▎@PathVariable vs @RequestBody vs @RequestParam:  
 
-   • @PathVariable извлекает переменную из пути URL (например, /users/{id}).  
+   - @PathVariable извлекает переменную из пути URL (например, /users/{id}).  
 
-   • @RequestBody принимает данные из тела запроса (обычно JSON).  
+   - @RequestBody принимает данные из тела запроса (обычно JSON).  
 
-   • @RequestParam извлекает параметры из строки запроса (например, ?name=John).  
+   - @RequestParam извлекает параметры из строки запроса (например, ?name=John).  
    Пример: GET /users/1?role=admin — id берётся через @PathVariable, а role через @RequestParam.
 
 ▎@Valid + @Pattern + @Min + @Max + @Nullable + @NotNull:  
    Эти аннотации используются для валидации данных:  
 
-   • @Valid запускает проверку объекта на соответствие правилам.  
+   - @Valid запускает проверку объекта на соответствие правилам.  
 
-   • @Pattern проверяет строку на соответствие регулярному выражению.  
+   - @Pattern проверяет строку на соответствие регулярному выражению.  
 
-   • @Min/@Max задают минимальные и максимальные значения чисел.  
+   - @Min/@Max задают минимальные и максимальные значения чисел.  
 
-   • @Nullable допускает значение null.  
+   - @Nullable допускает значение null.  
 
-   • @NotNull запрещает значение null.  
+   - @NotNull запрещает значение null.  
    Пример: поле возраста с аннотациями @NotNull @Min(18) требует, чтобы возраст был указан и был не менее 18.
 
 ▎Swagger + @Operation, OpenAPI:  
