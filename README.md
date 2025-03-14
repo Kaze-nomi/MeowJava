@@ -598,17 +598,17 @@ public class Prototype implements Cloneable {
     Паттерн, который задаёт общий алгоритм выполнения задачи с возможностью переопределения отдельных шагов в подклассах.  
     *Пример*: Алгоритм приготовления кофе или чая (заварить воду, добавить ингредиенты).  
 
-    ```java
-    abstract class Beverage { final void prepare() { boilWater(); addIngredients(); } abstract void addIngredients(); void boilWater() { System.out.println("Boiling water"); } }
-    ```
+   ```java
+    abstract class Beverage { final void prepare() { boilWater(); addIngredients(); } abstract void addIngredients(); void boilWater() { System.out.println("Boiling water");}}
+   ```
 
 ▎Посетитель (Visitor)
     Паттерн, который позволяет добавлять новые операции к существующим объектам без изменения их структуры.  
     *Пример*: Подсчёт стоимости товаров в корзине интернет-магазина.  
 
-    ```java
+   ```java
     interface Visitor { void visit(Book book); void visit(Fruit fruit); }
-    ```
+   ```
 
 ---
 
