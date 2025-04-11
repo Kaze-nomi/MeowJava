@@ -1,8 +1,8 @@
 # Общая идея решения
 
-## Реализованный функционал:
+## Реализованный функционал
 
-### Управление банковскими сущностями:
+### Управление банковскими сущностями
 
 - Счета (BankAccount)
 
@@ -12,13 +12,13 @@
 
 - Получение различной информации о вышеупомянутых сущностях
 
-### Импорт/экспорт данных:
+### Импорт/экспорт данных
 
 - Поддержка форматов: JSON, YAML, CSV
 
 - Автоматическое сохранение данных при завершении работы
 
-### Система отчётов:
+### Система отчётов
 
 - Генерация логов операций (ReportOperationObserver)
 
@@ -28,9 +28,9 @@
 
 # Реализованные принципы SOLID и GRASP
 
-## SOLID:
+## SOLID
 
-### Single Responsibility:
+### Single Responsibility
 
 - BankAccountService — управление счетами
 
@@ -41,49 +41,49 @@
 - Импортеры/Экспортеры — только загрузка/сохранение данных
 
 
-### Open/Closed:
+### Open/Closed
 
 - Интерфейсы IDataImporter и IDataExporter позволяют добавлять новые форматы без изменения существующего кода
 
 - DataImporterFactory и DataExporterFactory реализуют открытость для расширения
 
-### Liskov Substitution:
+### Liskov Substitution
 
 - Все импортеры (JsonDataImporter, YAMLDataImporter, CSVDataImporter) взаимозаменяемы через общий интерфейс
 
-### Interface Segregation:
+### Interface Segregation
 
 - Раздельные интерфейсы для провайдеров: IBankAccountProvider, ICategoryProvider, IOperationProvider
 
-### Dependency Inversion:
+### Dependency Inversion
 
 - Внедрение зависимостей через конструкторы (Lombok @RequiredArgsConstructor) и Spring
 
 - HSEBank зависит от абстракций (IOperationProvider)
 
-## GRASP:
+## GRASP
 
-### Information Expert:
+### Information Expert
 
 - BankAccountService — эксперты по работе со счетами
 
 - OperationService — эксперты по финансовым операциям
 
-### Creator:
+### Creator
 
 - Фабрики (BankAccountFactory, CategoryFactory) создают объекты доменной модели
 
-### Controller:
+### Controller
 
 - Класс HSEBank обрабатывает высокоуровневые команды
 
-### Low Coupling:
+### Low Coupling
 
 - Модули взаимодействуют через интерфейсы (например, IOperationObserver)
 
 - Отсутствие прямых ссылок между импортерами и сервисами
 
-### High Cohesion:
+### High Cohesion
 
 - Каждый сервис (*Service) имеет строго определённую зону ответственности
 
@@ -105,7 +105,7 @@
 
 - Классы: ReportOperationObserver, IOperationObserver
 
-## Строитель (Builder):
+## Строитель (Builder)
 
 - ReportBuilder для поэтапного создания сложных отчётов
 
@@ -121,7 +121,7 @@
 
 - Классы: BankAccountFactory, CategoryFactory, OperationFactory
 
-## Фабричный метод (Factory Method):
+## Фабричный метод (Factory Method)
 
 - DataImporterFactory и DataExporterFactory создают объекты по формату
 
@@ -161,7 +161,7 @@
 
 - Классы: Spring-бины (например, HSEBank, OperationService).
 
-## Адаптер (Adapter):
+## Адаптер (Adapter)
 
 - Импортеры адаптируют различные форматы данных к единому интерфейсу
 
@@ -169,7 +169,7 @@
 
 - Классы: JsonDataImporter, CSVDataImporter
 
-## Состояние (State):
+## Состояние (State)
 
 - OperationType определяет поведение при генерации сообщений
 
@@ -177,19 +177,18 @@
 
 - Классы: OperationType
 
----
 
-# Инструкция по запуску main: 
+# Инструкция по запуску main
 
 1. Запустить ./gradlew bootRun --console=plain
 
-# Также, можно запустить тесты и проверить покрытие через плагин JaCoCo.
+## Также, можно запустить тесты и проверить покрытие через плагин JaCoCo.
 
 1. Запустить ./gradlew test (результаты в build/reports/tests/test/index.html)
 
 2. Посмотреть покрытие тестов JaCoCo (build/reports/jacoco/test/html/index.html)
 
-P.S. Тесты приводят к очищению файлов сохранения и лога.
+## P.S. Тесты приводят к очищению файлов сохранения и лога.
 
 ---
 
