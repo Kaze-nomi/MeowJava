@@ -925,3 +925,155 @@ class TreeFactory {
    ---
 
 ▎Уникальный факт: В Spring можно комбинировать аннотации маршрутизации: например, использовать @RequestMapping на уровне класса для задания базового пути и @GetMapping на уровне метода для уточнения запроса.
+
+# Семинар 12
+
+▎1. Что такое Docker? Зачем он нужен?
+
+Docker — это платформа для контейнеризации приложений. Он позволяет упаковать приложение и его зависимости в контейнер, который можно запускать на любом сервере, где установлен Docker. Это упрощает развертывание, тестирование и переносимость приложений.
+
+Пример из жизни: Представь, что у тебя есть приложение, которое требует определённую версию Java и PostgreSQL. С Docker ты можешь создать контейнеры с этими зависимостями и не беспокоиться о том, что на сервере может быть другая версия ПО.
+
+```shell
+docker run hello-world
+```
+
+---
+
+▎2. Как поднять БД в Docker?
+
+Для поднятия базы данных в Docker используется команда docker run. Например, для PostgreSQL:
+
+```shell
+docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+```
+
+Здесь мы создаём контейнер с PostgreSQL, задаём пароль для пользователя postgres и запускаем его в фоновом режиме (-d). После этого база данных доступна на порту 5432.
+
+---
+
+▎3. Как подключить БД к приложению?
+
+Для подключения приложения к БД нужно указать параметры подключения (хост, порт, имя пользователя, пароль). Например, в Java с использованием Hibernate или JDBC:
+
+```java
+Properties props = new Properties();
+props.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/mydb");
+props.setProperty("hibernate.connection.username", "postgres");
+props.setProperty("hibernate.connection.password", "mysecretpassword");
+```
+
+В файле application.properties для Spring Boot это будет выглядеть так:
+
+```java
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
+spring.datasource.username=postgres
+spring.datasource.password=mysecretpassword
+```
+
+---
+
+▎4. Что такое Repository?
+
+Repository — это паттерн проектирования, который используется для работы с базой данных. В Java, например, в Spring Data JPA репозиторий представляет собой интерфейс, который предоставляет методы для операций CRUD.
+
+Пример:
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
+}
+```
+
+Этот интерфейс автоматически предоставляет методы для работы с сущностью User.
+
+---
+
+▎5. Что такое Hibernate?
+
+Hibernate — это ORM-фреймворк (Object-Relational Mapping), который позволяет работать с базой данных через объекты Java. Он автоматически преобразует объекты в записи таблиц и наоборот.
+
+Пример:
+
+```java
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String password;
+}
+```
+
+В этом примере класс User мапится на таблицу в базе данных.
+
+---
+
+▎6. Связь one-to-one, one-to-many, many-to-many в Java
+
+• One-to-One (один-к-одному): Один объект связан с одним другим объектом.
+
+```java
+@Entity
+public class User {
+    @OneToOne
+    private Profile profile;
+}
+```
+
+• One-to-Many (один-ко-многим): Один объект связан с несколькими другими объектами.
+
+```java
+@Entity
+public class User {
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+}
+```
+
+• Many-to-Many (многие-ко-многим): Несколько объектов связаны с несколькими другими объектами.
+
+```java
+@Entity
+public class Student {
+    @ManyToMany
+    private List<Course> courses;
+}
+```
+
+---
+
+▎7. Как сделать общую таблицу для разных объектов?
+
+В Hibernate можно использовать стратегию наследования @Inheritance. Например:
+
+```java
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Vehicle {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+}
+
+@Entity
+public class Car extends Vehicle {
+    private int numberOfDoors;
+}
+
+@Entity
+public class Bike extends Vehicle {
+    private boolean hasPedals;
+}
+```
+
+Здесь Car и Bike будут храниться в одной таблице Vehicle.
+
+---
+
+▎8. Уникальный факт:
+
+Docker позволяет запускать несколько экземпляров одной и той же базы данных с разными конфигурациями на одном сервере. Это удобно для тестирования разных окружений. Например, можно запустить PostgreSQL версии 12 и версии 15 параллельно без конфликтов.
