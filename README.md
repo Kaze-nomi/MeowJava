@@ -1235,3 +1235,113 @@ public class Order {
 ▎Уникальный факт
 
 Flyway поддерживает версионирование не только SQL-скриптов, но и Java-классов для миграций, что позволяет писать сложную логику миграции на Java вместо SQL.
+
+# Семинар 13
+
+▎gRPC
+
+gRPC — это фреймворк от Google для создания высокопроизводительных RPC (Remote Procedure Calls) сервисов. Он использует HTTP/2 для передачи данных и Protocol Buffers (protobuf) для сериализации сообщений.
+
+Пример из жизни: gRPC можно использовать для связи между микросервисами, например, для передачи данных между сервисом авторизации и сервисом профилей пользователя.  
+
+```java
+// Пример вызова gRPC метода клиента
+MyServiceGrpc.MyServiceBlockingStub stub = MyServiceGrpc.newBlockingStub(channel);
+Response response = stub.myMethod(Request.newBuilder().setValue("Hello").build());
+```
+
+---
+
+▎Protocol Buffers (.proto)
+
+Protocol Buffers (protobuf) — это язык описания интерфейсов (IDL), используемый для сериализации структур данных. Файлы .proto содержат описание структуры сообщений и сервисов, которые затем компилируются в код для разных языков программирования.
+
+Пример из жизни: .proto файл может описывать структуру сообщения, которое передаётся между приложением и базой данных через gRPC.  
+
+```proto
+syntax = "proto3";
+
+message User {
+  string id = 1;
+  string name = 2;
+}
+
+service UserService {
+  rpc GetUser(User) returns (User);
+}
+```
+
+---
+
+▎@GrpcService
+
+Аннотация @GrpcService используется в Java для обозначения gRPC-сервиса, который будет зарегистрирован в сервере. Она чаще всего встречается в Spring Boot приложениях при интеграции с gRPC. 
+
+Пример из жизни: можно создать сервис для обработки запросов клиента.  
+
+```java
+@GrpcService
+public class MyGrpcService extends MyServiceGrpc.MyServiceImplBase {
+    @Override
+    public void myMethod(Request request, StreamObserver<Response> responseObserver) {
+        Response response = Response.newBuilder().setValue("Hello, " + request.getValue()).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+}
+```
+
+---
+
+▎Как сгенерировать серверные и клиентские сервисы для общения  
+
+Для генерации серверных и клиентских сервисов необходимо использовать компилятор Protocol Buffers (protoc) с соответствующими плагинами для вашего языка программирования. В случае Java, можно добавить плагин в Gradle или Maven.  
+
+Пример:  
+
+• Добавьте в build.gradle: 
+
+```kotlin
+plugins {
+    id 'com.google.protobuf' version '0.9.4'
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.21.12" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.57.2" }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc {}
+            }
+        }
+    }
+}
+```
+
+• Запустите команду ./gradlew build, чтобы сгенерировать классы.
+
+---
+
+▎Как написать сообщение в Telegram
+
+Для отправки сообщения в Telegram можно использовать Telegram Bot API. В Java это делается через библиотеки, такие как TelegramBots или HttpClient.  
+Пример:  
+
+```java
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
+SendMessage message = new SendMessage();
+message.setChatId("123456789"); // ID чата
+message.setText("Привет, Telegram!");
+bot.execute(message);
+```
+
+---
+
+▎Уникальный факт
+
+gRPC поддерживает стриминг данных, что делает его особенно удобным для работы с потоками информации в реальном времени, например, видеоконференциями или обновлениями биржевых котировок. Также, благодаря использованию HTTP/2, gRPC может поддерживать множество одновременных соединений на одном TCP-соединении, что снижает задержки и повышает производительность.
