@@ -226,4 +226,4 @@
 
 Облако слов кода проекта :>
 
-!(wordcloud.png)
+![wordcloud.png](wordcloud.png)
