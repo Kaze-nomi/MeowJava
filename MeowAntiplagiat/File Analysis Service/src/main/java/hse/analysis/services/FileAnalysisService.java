@@ -49,11 +49,6 @@ public class FileAnalysisService {
 
         String error = "";
 
-        var existingAnalysis = fileRepository.findById(Integer.parseInt(fileId)).orElse(null);
-        if (existingAnalysis != null) {
-            throw new IOException("Анализ файла уже существует");
-        }
-
         int charCount = fileContent.length();
         int wordCount = fileContent.isEmpty() ? 0 : fileContent.split("\\s+").length;
         int paragraphCount = fileContent.isEmpty() ? 0 : fileContent.split("\\r?\\n\\r?\\n").length;
